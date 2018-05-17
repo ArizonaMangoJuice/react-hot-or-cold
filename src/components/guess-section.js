@@ -9,11 +9,11 @@ export default function GuessSection(props) {
         <section>
             <h2 id="feedback">{props.feedback}</h2>
             <GuessForm 
-            onGuessNumber={(number) => props.onGuessNumber(number)}
-            onGuessClick={(number) => props.onGuessClick(number)}
+            onGuessNumber={props.onGuessNumber}
+            onGuessClick={props.onGuessClick}
             currentGuess={props.currentGuess}
             guess={props.guess}
-            hotOrCold={(guess) => props.hotOrCold(guess)} />
+            hotOrCold={props.hotOrCold} />
         </section>
     );
 }
