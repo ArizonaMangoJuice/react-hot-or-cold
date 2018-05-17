@@ -22,10 +22,10 @@ export default class Game extends React.Component {
         }); 
     }
 
+    
     onGuessClick(number){
         if(number === '') return;
-        if(parseInt(number,10) < 0) {
-            this.numError();
+        if(parseInt(this.state.guess,10) < 0){
             return;
         }
         this.setState({
@@ -64,38 +64,31 @@ export default class Game extends React.Component {
         this.setState({message: 'number has to be bigger than zero'});
     }
 
-    numError(number){
-        if(number < 0){
-            this.lessThanZero();
+    numError(){
+        if(parseInt(this.state.guess,10) < 0){
+            this.setState({message: 'number cannot be less than zero'});
+            return;
         }
-    }
-
-    correct(){
-        this.setState({message: 'Correct Guess'});
-    }
-
-    cold(){
-        this.setState({message: 'cold'});
-    }
-
-    hot(){
-        this.setState({message: 'hot'});
     }
 
     hotOrCold(guess){
-        if(this.state.randomNumber === parseInt(this.state.guess,10)) {
-            this.correct();
+        if(parseInt(this.state.guess,10) < 0){
+            this.setState({message: 'number cannot be less than zero'});
             return;
         }
-         if(this.state.randomNumber - parseInt(this.state.guess,10) >= 10){
-            this.cold();
+        if(this.state.randomNumber === parseInt(this.state.guess,10)) {
+            this.setState({message: 'Correct Guess'});
+            return;
+        }
+         if(Math.abs(this.state.randomNumber - parseInt(this.state.guess, 10)) >= 10){
+            this.setState({message: 'cold'});
             return;
          } 
-        if(this.state.randomNumber - this.state.guess <= 5){
-            this.hot();
+        if(Math.abs(this.state.randomNumber - parseInt(this.state.guess, 10)) <= 5){
+            this.setState({message: 'hot'});
             return;
         } 
-        console.log(this.state.randomNumber - guess);
+        // console.log(this.state.randomNumber - guess);
     }
 
     render(){ 
