@@ -25,7 +25,8 @@ export default class Game extends React.Component {
     
     onGuessClick(number){
         if(number === '') return;
-        if(parseInt(this.state.guess,10) < 0){
+        console.log();
+        if(parseInt(this.state.guess,10) < 0 || !Number.isInteger(parseInt(this.state.guess,10))){
             return;
         }
         this.setState({
@@ -38,7 +39,8 @@ export default class Game extends React.Component {
         this.setState({
             guess: '',
             guessHistory: [],
-            randomNumber: num
+            randomNumber: num,
+            message: 'Make your Guess!'
         })
     }
 
@@ -56,22 +58,11 @@ export default class Game extends React.Component {
         
     }
 
-    componentWillMount(){
-        this.randomNumber();
-    }
-
-    lessThanZero(){
-        this.setState({message: 'number has to be bigger than zero'});
-    }
-
-    numError(){
-        if(parseInt(this.state.guess,10) < 0){
-            this.setState({message: 'number cannot be less than zero'});
+    hotOrCold(guess){
+        if(!Number.isInteger(parseInt(this.state.guess,10))){
+            this.setState({message: 'It needs to be a number'});
             return;
         }
-    }
-
-    hotOrCold(guess){
         if(parseInt(this.state.guess,10) < 0){
             this.setState({message: 'number cannot be less than zero'});
             return;
@@ -88,11 +79,13 @@ export default class Game extends React.Component {
             this.setState({message: 'hot'});
             return;
         } 
-        // console.log(this.state.randomNumber - guess);
+    }
+
+    componentWillMount(){
+        this.randomNumber();
     }
 
     render(){ 
-        // this.hotOrCold(this.state.randomNumber)
         return (
             <div>
                 <Header onGameReset={() => this.GameReset()}/>
